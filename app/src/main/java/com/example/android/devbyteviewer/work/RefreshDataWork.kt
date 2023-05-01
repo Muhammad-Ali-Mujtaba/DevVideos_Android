@@ -35,12 +35,12 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
 
         val database = getDatabase(applicationContext)
         val repository = VideosRepository(database)
-        return try {
+        try {
             repository.refreshVideos()
-            Result.success()
+            return Result.success()
         }
-        catch (exception: HttpException){
-            Result.retry()
+        catch (exception: Exception){
+            return Result.retry()
         }
 
     }
